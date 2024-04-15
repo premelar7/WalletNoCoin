@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 export default defineNuxtConfig({
   app: {
-    // pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: "Money W.N.C",
       meta: [
@@ -20,6 +23,19 @@ export default defineNuxtConfig({
     }
   },
   devtools: { enabled: true },
+  css: ['~/assets/css/main.scss'],
+  build: {
+    transpile: ['vuetify'],
+  },
+  modules: [
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
+    },
+    //...
+  ],
   vite: {
     css: {
       preprocessorOptions: {
@@ -27,7 +43,11 @@ export default defineNuxtConfig({
           additionalData: '@use "~/assets/_colors.scss" as *;'
         }
       }
-    }
+    },
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
   },
-  css: ['~/assets/css/main.scss']
 })
