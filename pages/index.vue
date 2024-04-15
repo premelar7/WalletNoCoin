@@ -9,43 +9,44 @@
                 <AppAlert>
                     This is an auto-imported component
                 </AppAlert>
-                <v-text-field v-model="firstname" variant="outlined" label="First name"></v-text-field>
+                <form @submit.prevent="uploadFile">
+                    <v-file-input label="File input" variant="outlined" @change="handleFileChange" required></v-file-input>
+                    <v-btn variant="tonal" type="submit">upload</v-btn>
+                </form>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
-<script>
-export default {
-    data: () => ({
-        valid: false,
-        firstname: '',
-        lastname: '',
-        nameRules: [
-            value => {
-                if (value) return true
+<script setup>
 
-                return 'Name is required.'
-            },
-            value => {
-                if (value?.length <= 10) return true
+const file = ref(null);
 
-                return 'Name must be less than 10 characters.'
-            },
-        ],
-        email: '',
-        emailRules: [
-            value => {
-                if (value) return true
-
-                return 'E-mail is requred.'
-            },
-            value => {
-                if (/.+@.+\..+/.test(value)) return true
-
-                return 'E-mail must be valid.'
-            },
-        ],
-    }),
+function handleFileChange(event) {
+    file.value = event.target.files[0];
 }
+
+async function uploadFile() {
+    if (!file.value) {
+        alert('Please select a file.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file.value);
+
+    try {
+        const response = await fetch('api/upload', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+        alert(result.message);
+    } catch (err) {
+        console.error('Error uploading file:', err);
+        alert('Error uploading file.');
+    }
+}
+
 </script>
