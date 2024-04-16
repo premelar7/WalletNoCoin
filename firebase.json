@@ -2,12 +2,21 @@
   "functions": {
     "source": ".output/server"
   },
-  "hosting": {
-    "public": ".output/public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+  "hosting": [
+    {
+      "site": "walletnocoin",
+      "public": ".output/public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "server"
+        }
+      ]
+    }
+  ]
 }
