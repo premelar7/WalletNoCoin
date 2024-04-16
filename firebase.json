@@ -6,6 +6,7 @@
     {
       "site": "walletnocoin",
       "public": ".output/public",
+      "cleanUrls": true,
       "rewrites": [
         {
           "source": "**",
