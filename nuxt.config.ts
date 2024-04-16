@@ -3,7 +3,11 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
-  ssr: false,
+  nitro: {
+    firebase: {
+      gen: 2
+    }
+  },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {

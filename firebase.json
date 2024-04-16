@@ -6,11 +6,6 @@
     {
       "site": "walletnocoin",
       "public": ".output/public",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
       "rewrites": [
         {
           "source": "**",
